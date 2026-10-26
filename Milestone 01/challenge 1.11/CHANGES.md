@@ -70,7 +70,7 @@ Verification performed:
 - `npm ci` — completed.
 - `npm test` — passed: 12 tests, 0 failures, covering missing input, invalid text/category, create, list, lookup, category filtering, configured and missing-token authorization, deletion, and response formats.
 - `npm audit fix` — updated a compatible transitive dependency; final audit reported 0 vulnerabilities.
-- `npm start` — started successfully with `PORT=32872`; `GET /api/v1/confessions` returned HTTP 200 with the expected empty-list response.
+- `npm start` — started successfully with `PORT=32873`; `GET /api/v1/confessions` returned HTTP 200 with the expected empty-list response.
 
 There are no database operations or database dependency in this project, so database failures cannot be simulated without introducing a new persistence layer.
 
