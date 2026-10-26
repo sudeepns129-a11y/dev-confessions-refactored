@@ -2,9 +2,9 @@ const { deleteToken } = require('../config')
 const confessionService = require('../services/confessionService')
 
 function createConfession(req, res) {
-  const result = confessionService.createConfession(req.body)
-  if (typeof result.body === 'string') return res.status(result.status).send(result.body)
-  return res.status(result.status).json(result.body)
+  const serviceResult = confessionService.createConfession(req.body)
+  if (typeof serviceResult.body === 'string') return res.status(serviceResult.status).send(serviceResult.body)
+  return res.status(serviceResult.status).json(serviceResult.body)
 }
 
 function getAllConfessions(req, res) {
@@ -26,7 +26,8 @@ function getConfessionsByCategory(req, res) {
 }
 
 function deleteConfession(req, res) {
-  if (req.headers['x-delete-token'] !== deleteToken) {
+  // Fail closed when the deployment has not configured a deletion token.
+  if (!deleteToken || req.headers['x-delete-token'] !== deleteToken) {
     return res.status(403).json({ msg: 'no permission' })
   }
   if (!req.params.id) return res.status(400).send('no id')

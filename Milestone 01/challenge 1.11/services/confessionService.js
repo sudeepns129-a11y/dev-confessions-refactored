@@ -5,6 +5,9 @@ let nextConfessionId = 0
 
 function validateConfessionInput(confessionData) {
   if (!confessionData) return { status: 400, body: { msg: 'bad' } }
+  if (typeof confessionData.text !== 'string') {
+    return { status: 400, body: { msg: 'need text' } }
+  }
   if (!confessionData.text) return { status: 400, body: { msg: 'need text' } }
   if (confessionData.text.length >= 500) {
     return { status: 400, body: { error: 'text too big, must be less than 500 characters long buddy' } }
@@ -39,7 +42,8 @@ function listConfessions() {
 }
 
 function findConfession(confessionId) {
-  return confessions.find(confession => confession.id === parseInt(confessionId))
+  const parsedConfessionId = parseInt(confessionId)
+  return confessions.find(confession => confession.id === parsedConfessionId)
 }
 
 function listConfessionsByCategory(category) {
@@ -48,7 +52,8 @@ function listConfessionsByCategory(category) {
 }
 
 function deleteConfession(confessionId) {
-  const confessionIndex = confessions.findIndex(confession => confession.id === parseInt(confessionId))
+  const parsedConfessionId = parseInt(confessionId)
+  const confessionIndex = confessions.findIndex(confession => confession.id === parsedConfessionId)
   if (confessionIndex === -1) return null
   return confessions.splice(confessionIndex, 1)[0]
 }
