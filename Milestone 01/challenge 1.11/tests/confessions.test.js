@@ -26,6 +26,22 @@ test('confessions API preserves its endpoint and response behavior', async t => 
     body: JSON.stringify(confessionData)
   })
 
+  await t.test('reports service health without exposing internal details', async () => {
+    const response = await fetch(`http://127.0.0.1:${port}/health`)
+    assert.equal(response.status, 200)
+    assert.deepEqual(await response.json(), { status: 'ok' })
+  })
+
+  await t.test('returns a safe client error for malformed JSON', async () => {
+    const response = await request('', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: '{"text":'
+    })
+    assert.equal(response.status, 400)
+    assert.deepEqual(await response.json(), { msg: 'invalid JSON' })
+  })
+
   await t.test('loads the delete token from environment configuration', () => {
     assert.equal(deleteToken, 'test-delete-token')
   })

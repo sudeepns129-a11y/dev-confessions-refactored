@@ -68,9 +68,10 @@ All five endpoint paths and the established success/error response shapes are re
 Verification performed:
 
 - `npm ci` — completed.
-- `npm test` — passed: 12 tests, 0 failures, covering missing input, invalid text/category, create, list, lookup, category filtering, configured and missing-token authorization, deletion, and response formats.
+- `npm test` — passed: 14 tests, 0 failures, covering the health check, malformed JSON, missing input, invalid text/category, create, list, lookup, category filtering, configured and missing-token authorization, deletion, and response formats.
 - `npm audit fix` — updated a compatible transitive dependency; final audit reported 0 vulnerabilities.
-- `npm start` — started successfully with `PORT=32873`; `GET /api/v1/confessions` returned HTTP 200 with the expected empty-list response.
+- `npm start` — the application was smoke-tested with a non-default `PORT`; `GET /api/v1/confessions` returned HTTP 200 with the expected empty-list response.
+- `GET /health` — returned HTTP 200 with `{ "status": "ok" }`; malformed JSON returned a safe HTTP 400 JSON error.
 
 There are no database operations or database dependency in this project, so database failures cannot be simulated without introducing a new persistence layer.
 
@@ -80,6 +81,7 @@ There are no database operations or database dependency in this project, so data
 - Made `app.js` importable independently from the process listener so endpoint tests can bind an ephemeral port.
 - Kept the existing route prefix, category values, response formats, and deletion header.
 - Failed closed when `DELETE_TOKEN` is missing instead of treating an absent header as valid authorization.
+- Added `GET /health` for deployment health checks and a JSON error handler that returns a safe response for malformed request bodies and unexpected server errors.
 
 ## 9. Known limitations
 

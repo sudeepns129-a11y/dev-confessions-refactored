@@ -35,7 +35,7 @@ For development with automatic restarts:
 npm run dev
 ```
 
-The application listens on the configured port. `GET /api/v1/confessions` can be used as a smoke check.
+The application listens on the port provided by `PORT`. `GET /health` returns `{"status":"ok"}` for platform health checks; `GET /api/v1/confessions` is an API smoke check.
 
 ## API endpoints
 
@@ -75,4 +75,4 @@ The service uses the starter's in-memory array. Confessions are lost on restart 
 
 See [AUDIT.md](./AUDIT.md) for the pre-refactor findings and [CHANGES.md](./CHANGES.md) for the actual variable renames, function decomposition, compatibility notes, and verification results.
 
-No live deployment URL is available: the application has not been deployed. To deploy on Render, create a Web Service from this repository and branch, set the root directory to `Milestone 01/challenge 1.11`, the build command to `npm ci`, and the start command to `npm start`. Set `DELETE_TOKEN` in Render's environment settings; Render supplies `PORT`. After deployment, verify `GET /api/v1/confessions` before publishing the URL. The current in-memory store is not suitable for durable multi-instance operation.
+To deploy on Render, create a Web Service from `sudeepns129-a11y/dev-confessions-refactored`, branch `refactor/clean-up`. Set the root directory to `Milestone 01/challenge 1.11`, the build command to `npm ci`, and the start command to `npm start`. Set `DELETE_TOKEN` in Render's environment settings; Render supplies `PORT`. Configure `/health` as the health-check path. The service has not yet been deployed, so no live URL is available. The current in-memory store is not suitable for durable multi-instance operation.
