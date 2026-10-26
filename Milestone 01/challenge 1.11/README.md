@@ -75,4 +75,4 @@ The service uses the starter's in-memory array. Confessions are lost on restart 
 
 See [AUDIT.md](./AUDIT.md) for the pre-refactor findings and [CHANGES.md](./CHANGES.md) for the actual variable renames, function decomposition, compatibility notes, and verification results.
 
-No live deployment URL is available: the application has not been deployed. A Render deployment also needs an explicitly configured `DELETE_TOKEN`; the current in-memory store is not suitable for durable multi-instance operation.
+No live deployment URL is available: the application has not been deployed. To deploy on Render, create a Web Service from this repository and branch, set the root directory to `Milestone 01/challenge 1.11`, the build command to `npm ci`, and the start command to `npm start`. Set `DELETE_TOKEN` in Render's environment settings; Render supplies `PORT`. After deployment, verify `GET /api/v1/confessions` before publishing the URL. The current in-memory store is not suitable for durable multi-instance operation.
